@@ -12,6 +12,7 @@ const port = process.env.PORT || 8080;
 app.use(express.static(publicPath));
 
 // Rutas 
+// se accede a todo lo que tenemos en el routes.js a través de la ruta /api
 const routes = require('./routes');
 app.use('/api', routes );
 
