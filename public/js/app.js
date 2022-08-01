@@ -143,3 +143,23 @@ postBtn.on('click', function() {
     crearMensajeHTML( mensaje, usuario );
 
 });
+
+// Obtener mensajes del servidor
+// Consumir los servicios REST
+const mensajesUrl = 'api';
+
+const getMensaje = (url) => {
+    fetch(url)
+    .then(resp => resp.json())
+    .then(posts => {
+        console.log(posts);
+        // iteramos en el arreglo de elementos
+        posts.forEach(post => {
+            // añadimos la función que gestiona las imágenes
+            crearMensajeHTML(post.mensaje, post.user);
+        });
+    })
+    .catch(console.log);
+}
+
+getMensaje(mensajesUrl);
