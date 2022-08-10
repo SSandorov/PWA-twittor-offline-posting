@@ -8,17 +8,8 @@ const mensajes = [
     _id: 'XXX',
     user: 'spiderman',
     mensaje: 'Hola Mundo'
-  },
-  {
-    _id: 'XXX',
-    user: 'ironman',
-    mensaje: 'Hola Mundo'
   }
 ];
-
-
-
-
 
 // Get mensajes
 router.get('/', function (req, res) {
@@ -26,8 +17,5 @@ router.get('/', function (req, res) {
   // Para obtener los mensajes escribimos lo siguiente
   res.json(mensajes);
 });
-
-
-
 
 module.exports = router;

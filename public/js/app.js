@@ -148,8 +148,8 @@ postBtn.on('click', function() {
 // Consumir los servicios REST
 const mensajesUrl = 'api';
 
-const getMensaje = (url) => {
-    fetch(url)
+const getMensaje = () => {
+    fetch('api')
     .then(resp => resp.json())
     .then(posts => {
         console.log(posts);
@@ -162,4 +162,4 @@ const getMensaje = (url) => {
     .catch(console.log);
 }
 
-getMensaje(mensajesUrl);
+getMensaje();

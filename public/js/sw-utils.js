@@ -36,7 +36,22 @@ function actualizaCacheStatico( staticCache, req, APP_SHELL_INMUTABLE ) {
                 });
     }
 
-
-
 }
 
+// Network with cache fallback / update
+function manejoApiMensajes(cacheName, req) {
+    return fetch(req)
+        .then(res => {
+            if(res.ok) {
+                actualizaCacheDinamico(cacheName, req, res.clone());
+                return res.clone();
+            } else {
+                return caches.match(req);
+            }
+        })
+        // En caso de que no hubiese conexión a internet nos daría un error, por lo que
+        // debemos manejar esta situación con un catch
+        .catch(err => {
+            return caches.match(req);
+        });
+}

@@ -79,26 +79,32 @@ self.addEventListener('activate', e => {
 
 self.addEventListener( 'fetch', e => {
 
-// Estrategia del caché: cache with network update
-    const respuesta = caches.match( e.request ).then( res => {
+    let respuesta;
 
-        if ( res ) {
-            
-            actualizaCacheStatico( STATIC_CACHE, e.request, APP_SHELL_INMUTABLE );
-            return res;
-        } else {
+    // Estrategia del caché: network with cache fallback / update
+    // Tenemos que gestionar con esta estrategia todo lo que venga de nuestra api,
+    // para que así no necesite actualizar dos veces al aplciación el cliente
+    if (e.request.url.includes('/api')) {
+            return manejoApiMensajes(DYNAMIC_CACHE, e.request);
+    } else {
+        respuesta = caches.match( e.request ).then( res => {
+            // Estrategia del caché: cache with network update
+            if ( res ) {
+                
+                actualizaCacheStatico( STATIC_CACHE, e.request, APP_SHELL_INMUTABLE );
+                return res;
+            } else {
 
-            return fetch( e.request ).then( newRes => {
+                return fetch( e.request ).then( newRes => {
 
-                return actualizaCacheDinamico( DYNAMIC_CACHE, e.request, newRes );
+                    return actualizaCacheDinamico( DYNAMIC_CACHE, e.request, newRes );
 
-            });
+                });
 
-        }
+            }
 
-    });
-
-
+        });
+    }
 
     e.respondWith( respuesta );
 
