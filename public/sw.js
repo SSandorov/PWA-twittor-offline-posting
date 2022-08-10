@@ -85,7 +85,7 @@ self.addEventListener( 'fetch', e => {
     // Tenemos que gestionar con esta estrategia todo lo que venga de nuestra api,
     // para que así no necesite actualizar dos veces al aplciación el cliente
     if (e.request.url.includes('/api')) {
-            return manejoApiMensajes(DYNAMIC_CACHE, e.request);
+            respuesta = manejoApiMensajes(DYNAMIC_CACHE, e.request);
     } else {
         respuesta = caches.match( e.request ).then( res => {
             // Estrategia del caché: cache with network update
