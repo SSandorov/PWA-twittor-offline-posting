@@ -23,4 +23,21 @@ router.get('/', function (req, res) {
   res.json(mensajes);
 });
 
+// Post mensajes
+router.post('/', function (req, res) {
+  const mensaje = {
+    // el body nos lo maneja el body parser
+    mensaje: req.body.mensaje,
+    user: req.body.user
+  };
+
+  // añadimos el mensaje al arreglo de mensajes
+  mensajes.push(mensaje);
+
+  res.json({
+    ok: true,
+    mensaje
+  });
+});
+
 module.exports = router;
