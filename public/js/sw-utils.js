@@ -43,15 +43,21 @@ function manejoApiMensajes(cacheName, req) {
 
     if (req.clone().method === 'POST') {
         // Postear un nuevo mensaje
-        req.clone().text()
-        .then(body => {
-            // console.log(body);
-            // recupero el objeto JS original para poder aplicarle propiedades
-            const bodyObj = JSON.parse(body);
-            guardarMensaje(bodyObj);
-        });
-        // tengo que almacenar la petición POST en el indexed db
-        return fetch(req);
+
+        // debemos comprobar si el navegador soporta el Background Sync API
+        if (self.registration.sync) {
+            return req.clone().text()
+            .then(body => {
+                // console.log(body);
+                // recupero el objeto JS original para poder aplicarle propiedades
+                const bodyObj = JSON.parse(body);
+                return guardarMensaje(bodyObj);
+            });
+
+        } else {
+            return fetch(req);
+        }
+
     } else {
         return fetch(req)
         .then(res => {

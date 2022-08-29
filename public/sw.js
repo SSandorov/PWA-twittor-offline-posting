@@ -115,4 +115,11 @@ self.addEventListener( 'fetch', e => {
 
 });
 
+// Registramos la tarea asíncrona para el posteo
+self.addEventListener('sync', e => {
+    console.log('SW: Sync');
 
+    if (e.tag === 'nuevo-post') {
+        // postear a indexedDB cuando haya conexión
+    }
+});
