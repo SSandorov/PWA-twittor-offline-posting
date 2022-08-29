@@ -121,5 +121,8 @@ self.addEventListener('sync', e => {
 
     if (e.tag === 'nuevo-post') {
         // postear a indexedDB cuando haya conexión
+        const respuesta = postearMensajes();
+        // esperamos hasta que todos los posteos terminen
+        e.waitUntil(respuesta);
     }
 });
