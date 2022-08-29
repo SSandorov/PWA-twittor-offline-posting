@@ -40,7 +40,14 @@ function actualizaCacheStatico( staticCache, req, APP_SHELL_INMUTABLE ) {
 
 // Network with cache fallback / update
 function manejoApiMensajes(cacheName, req) {
-    return fetch(req)
+
+    if (req.clone().method === 'POST') {
+        // Postear un nuevo mensaje
+
+        // tengo que almacenar la petición POST en el indexed db
+        return fetch(req);
+    } else {
+        return fetch(req)
         .then(res => {
             if(res.ok) {
                 actualizaCacheDinamico(cacheName, req, res.clone());
@@ -54,4 +61,6 @@ function manejoApiMensajes(cacheName, req) {
         .catch(err => {
             return caches.match(req);
         });
+    }
+    
 }

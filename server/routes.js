@@ -34,6 +34,9 @@ router.post('/', function (req, res) {
   // añadimos el mensaje al arreglo de mensajes
   mensajes.push(mensaje);
 
+  // imprimimos el posteo de los mensajes
+  console.log(mensajes);
+
   res.json({
     ok: true,
     mensaje
