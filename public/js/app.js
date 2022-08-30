@@ -1,4 +1,3 @@
-
 var url = window.location.href;
 var swLocation = '/twittor/sw.js';
 
@@ -13,10 +12,6 @@ if ( navigator.serviceWorker ) {
 
     navigator.serviceWorker.register( swLocation );
 }
-
-
-
-
 
 // Referencias de jQuery
 
@@ -35,8 +30,6 @@ var txtMensaje  = $('#txtMensaje');
 
 // El usuario, contiene el ID del hÃ©roe seleccionado
 var usuario;
-
-
 
 
 // ===== Codigo de la aplicaciÃ³n
@@ -180,3 +173,33 @@ const getMensaje = () => {
 }
 
 getMensaje();
+
+// Detectar cambios de conexión a internet
+const isOnline = () => {
+    if (navigator.onLine) {
+        // tenemos conexión
+        // console.log('online');
+        const myToastOnline = mdtoast('Online', {
+            interaction: true,
+            interactionTimeout: 1000,
+            actionText: 'OK!'
+        });
+        myToastOnline.show();
+    } else {
+        // no tenemos conexión
+        // console.log('offline');
+        const myToastOffline = mdtoast('Offline', {
+            interaction: true,
+            actionText: 'OK',
+            type: 'warning'
+        });
+
+        myToastOffline.show();
+    }
+}
+// debemos comprobar en el navegador cuando está conectado a internet o no
+window.addEventListener('online', isOnline);
+window.addEventListener('offline', isOnline);
+
+// nos sale el mensaje desde que iniciamos la app
+isOnline();
